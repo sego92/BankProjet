@@ -92,7 +92,7 @@ public class SrcOperation extends BankService {
     }
     
     
-    protected Operation readEntity (ResultSet rs) throws SQLException {
+    protected Operation populatedEntity (ResultSet rs) throws SQLException {
     	Operation operation = new Operation();
     	operation.setId(rs.getInt("id"));
     	operation.setAccountNumber(rs.getString("accountNumber"));

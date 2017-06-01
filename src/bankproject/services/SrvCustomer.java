@@ -88,7 +88,7 @@ public class SrvCustomer extends BankService {
     }
     
     
-    protected Customer readEntity (ResultSet rs) throws SQLException {
+    protected Customer populateEntity (ResultSet rs) throws SQLException {
     	Customer customer = new Customer();
 		customer.setId(rs.getInt("id"));
 		customer.setFirstName(rs.getString("firstname"));
