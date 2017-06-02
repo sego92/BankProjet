@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 import bankproject.entities.Account;
 import bankproject.entities.BankEntity;
-import bankproject.entities.Customer;
 import bankproject.exceptions.SrvException;
 
 public class SrvAccount extends BankService {
@@ -117,7 +116,7 @@ public class SrvAccount extends BankService {
 				updateAccount(account);
 			}
 		} else {
-			throw new SrvException("Utilisation du mauvais service");
+			throw new SrvException();
 		}
 	
 		

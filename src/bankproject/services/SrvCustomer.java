@@ -28,7 +28,7 @@ public class SrvCustomer extends BankService {
 		sql.append("CREATE TABLE IF NOT EXISTS customer (");
 		sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
 		sql.append("LastName VARCHAR(255),");
-		sql.append("FirstName VARCHAR(255),");
+		sql.append("FirstName VARCHAR(255)");
 		sql.append(")");
 		
 		Statement st = SQLiteManager.getConnection().createStatement();
@@ -108,7 +108,7 @@ public class SrvCustomer extends BankService {
 				updateCustomer(customer);
 			}
 		} else {
-			throw new SrvException("Utilisation du mauvais service");
+			throw new SrvException();
 		}
 	
 		

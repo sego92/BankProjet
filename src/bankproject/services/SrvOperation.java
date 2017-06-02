@@ -7,20 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bankproject.entities.Account;
+
 import bankproject.entities.BankEntity;
 import bankproject.exceptions.SrvException;
 import bankproject.entities.Operation;
 
-public class SrcOperation extends BankService {
-	private static SrcOperation INSTANCE = new SrcOperation();
+public class SrvOperation extends BankService {
+	private static SrvOperation INSTANCE = new SrvOperation();
 	
-	public static SrcOperation getINSTANCE() {
+	public static SrvOperation getINSTANCE() {
 		return INSTANCE;
 	}
 
 
-	public static void setINSTANCE(SrcOperation iNSTANCE) {
+	public static void setINSTANCE(SrvOperation iNSTANCE) {
 		INSTANCE = iNSTANCE;
 	}
 	
@@ -117,7 +117,7 @@ public class SrcOperation extends BankService {
 				updateOperation(operation);
 			}
 		} else {
-			throw new SrvException("Utilisation du mauvais service");
+			throw new SrvException();
 		}
 	
 		
