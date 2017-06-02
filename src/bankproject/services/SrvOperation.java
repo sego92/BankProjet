@@ -30,7 +30,7 @@ public class SrvOperation extends BankService {
 		sql.append("CREATE TABLE IF NOT EXISTS operation (");
 		sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
 		sql.append("AccountNumber VARCHAR(255),");
-		sql.append("Operation DOUBLE,");
+		sql.append("CreditDebit DOUBLE,");
 		sql.append("DateOperation DATETIME");
 		sql.append(")");
 		
@@ -49,8 +49,8 @@ public class SrvOperation extends BankService {
 			connection = SQLiteManager.getConnection();
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, entity.getAccountNumber());
-			ps.setDouble(3, entity.getCreditDebit());
-			ps.setDate(4, dateSQL);
+			ps.setDouble(2, entity.getCreditDebit());
+			ps.setDate(3, dateSQL);
 			ps.execute();
 		}catch (SQLException e) {
 			
