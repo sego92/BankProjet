@@ -95,7 +95,7 @@ public class SrvAccount extends BankService {
     }
     
     
-    protected Account populateEntity (ResultSet rs) throws SQLException {
+    protected Account readEntity (ResultSet rs) throws SQLException {
     	Account account = new Account();
 		account.setId(rs.getInt("id"));
 		account.setFirstName(rs.getString("firstname"));

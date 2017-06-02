@@ -10,45 +10,45 @@ public class Account extends BankEntity {
 	
 	
 	
-public String getAccountNumber (){
-		int numeroAleatoire = (int) ((Math.random()*(999999-111111)+111111));
-		String str = String.valueOf(numeroAleatoire);
-		String indicatif = null;
-		if (pays == PaysEnum.FRANCE){
-			indicatif = "FR";
-		}else if (pays == PaysEnum.PAYS_BAS){
-			indicatif = "NL";
-		}else if (pays == PaysEnum.GRANDE_BRETAGNE){
-			indicatif = "GB";
-		}else if (pays == PaysEnum.ALLEMAGNE){
-			indicatif = "DE";
-		}else if (pays == PaysEnum.ESPAGNE){
-			indicatif = "ES";
-		}
-		accountNumber = indicatif + str;	
-		// si le n° de compte existe deja recommencer peut etre avec un while
-		return accountNumber;
+	public String getAccountNumber (){
+			int numeroAleatoire = (int) ((Math.random()*(999999-111111)+111111));
+			String str = String.valueOf(numeroAleatoire);
+			String indicatif = null;
+			if (pays == PaysEnum.FRANCE){
+				indicatif = "FR";
+			}else if (pays == PaysEnum.PAYS_BAS){
+				indicatif = "NL";
+			}else if (pays == PaysEnum.GRANDE_BRETAGNE){
+				indicatif = "GB";
+			}else if (pays == PaysEnum.ALLEMAGNE){
+				indicatif = "DE";
+			}else if (pays == PaysEnum.ESPAGNE){
+				indicatif = "ES";
+			}
+			accountNumber = indicatif + str;	
+			// si le n° de compte existe deja recommencer peut etre avec un while
+			return accountNumber;
 	}
 
 
 
 
 
-public Integer getId() {
-	return id;
-}
+	public Integer getId() {
+		return id;
+	}
 
 
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 
 
-public String getLastName() {
-	return lastName;
-}
+	public String getLastName() {
+		return lastName;
+	}
 
 
 

@@ -1,6 +1,7 @@
 package bankproject.services;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,13 +43,14 @@ public class SrcOperation extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
+		java.sql.Date dateSQL = new java.sql.Date(entity.getDateOperation().getTime());
 		String sql = "INSERT INTO operation (accountNumber, creditDebit, dateOperation) VALUES (?, ?, ?)";
 		try {
 			connection = SQLiteManager.getConnection();
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, entity.getAccountNumber());
 			ps.setDouble(3, entity.getCreditDebit());
-			ps.setDate(4, entity.getDateOperation());
+			ps.setDate(4, dateSQL);
 			ps.execute();
 		}catch (SQLException e) {
 			
@@ -68,6 +70,7 @@ public class SrcOperation extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
+		java.sql.Date dateSQL = new java.sql.Date(entity.getDateOperation().getTime());
 		String sql = "UPDATE operation SET accountNumber=?, creditDebit=?, dateOperation=?, WHERE ID=?";
 		try {
 			connection = SQLiteManager.getConnection();
@@ -75,7 +78,7 @@ public class SrcOperation extends BankService {
 			//ps.setString(1, entity.createAccountNumber());
 			ps.setString(2, entity.getAccountNumber());
 			ps.setDouble(3, entity.getCreditDebit());
-			ps.setDate(4, entity.getDateOperation());
+			ps.setDate(4, dateSQL);
 			ps.setInt(5, entity.getId());
 			ps.execute();
 		}catch (SQLException e) {
@@ -92,12 +95,13 @@ public class SrcOperation extends BankService {
     }
     
     
-    protected Operation populatedEntity (ResultSet rs) throws SQLException {
+    protected Operation readEntity (ResultSet rs) throws SQLException {
     	Operation operation = new Operation();
     	operation.setId(rs.getInt("id"));
     	operation.setAccountNumber(rs.getString("accountNumber"));
     	operation.setCreditDebit(rs.getDouble("creditDebit"));
-		operation.setDate(rs.getDouble("dateOperation"));
+    	java.util.Date dateUtil = new java.util.Date(rs.getDate("dateOperation").getTime());
+		operation.setDateOperation(dateUtil);
 	
 		return operation;
     }
