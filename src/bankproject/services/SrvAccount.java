@@ -152,4 +152,40 @@ public class SrvAccount extends BankService {
 			}
 		}
     }
+	
+	
+	public BankEntity get(String accountNumber) throws Exception {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		BankEntity result = null;
+		
+		StringBuilder query = new StringBuilder("SELECT * FROM ");
+		query.append(getBankTable());
+		query.append(" WHERE accountNumber = ?");
+		
+		try {
+			connection = SQLiteManager.getConnection();
+			pst = connection.prepareStatement(query.toString());
+			pst.setString(1, accountNumber);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				result = readEntity(rs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
+			
+			if (pst != null) {
+				pst.close();
+			}
+		}
+		
+		return result;
+	}
 }

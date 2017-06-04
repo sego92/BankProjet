@@ -13,17 +13,17 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		
-//		SrvCustomer srvCustomer = SrvCustomer.getINSTANCE();
-//		SrvAccount srvAccount = SrvAccount.getINSTANCE();
+		SrvCustomer srvCustomer = SrvCustomer.getINSTANCE();
+		SrvAccount srvAccount = SrvAccount.getINSTANCE();
 		SrvOperation srvOperation = SrvOperation.getINSTANCE();
 		SQLiteManager.getConnection();
-//		srvCustomer.createTableCustomer();
-//		srvAccount.createTableAccount();
+		srvCustomer.createTableCustomer();
+		srvAccount.createTableAccount();
 		srvOperation.createTableOperation();
 		
 		OperationThread xxx = new OperationThread ();
-		//AccountCustomerThread yyy = new AccountCustomerThread ();
-		//yyy.start();
+		AccountCustomerThread yyy = new AccountCustomerThread ();
+		yyy.start();
 		xxx.start();
 		
 		

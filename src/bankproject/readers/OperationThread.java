@@ -14,11 +14,7 @@ import bankproject.exceptions.SrvException;
 import bankproject.services.SrvOperation;
 
 public class OperationThread extends Thread {
-	
-	public OperationThread () {
 		
-	}
-	
 	private Operation splitData (String line){
 		Operation op = new Operation();
 		
@@ -38,16 +34,14 @@ public class OperationThread extends Thread {
 		//super.run();
 		while(true){
 			try {
-				sleep(3000);				
+				sleep(6600);				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("OperationThread");
 			File f = new File("c:/tmp/bank/input/operation.txt");
 			if (f.exists()) {
 				Date dateOperation = new Date();
-				System.out.println("OperationThread exist");
 //				Scanner scan = null;
 //				try {
 //					scan = new Scanner (f);
@@ -96,10 +90,7 @@ public class OperationThread extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			boolean i = f.delete();
-				
-			if(i)System.out.println("ok o");
-			else System.out.println("pas ok o");
+			f.delete();
 			} 
 			
 		}

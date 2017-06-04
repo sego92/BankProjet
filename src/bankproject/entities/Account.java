@@ -6,7 +6,7 @@ public class Account extends BankEntity {
 	private String lastName;
 	private String firstName;
 	private Double solde;
-	private PaysEnum pays; 
+	private String pays; 
 	
 	
 	
@@ -14,15 +14,15 @@ public class Account extends BankEntity {
 			int numeroAleatoire = (int) ((Math.random()*(999999-111111)+111111));
 			String str = String.valueOf(numeroAleatoire);
 			String indicatif = null;
-			if (pays == PaysEnum.FRANCE){
+			if (pays=="France"){
 				indicatif = "FR";
-			}else if (pays == PaysEnum.PAYS_BAS){
+			}else if (pays == "Pays-Bas"){
 				indicatif = "NL";
-			}else if (pays == PaysEnum.GRANDE_BRETAGNE){
+			}else if (pays == "Grande-Bretyagne"){
 				indicatif = "GB";
-			}else if (pays == PaysEnum.ALLEMAGNE){
+			}else if (pays == "Allemagne"){
 				indicatif = "DE";
-			}else if (pays == PaysEnum.ESPAGNE){
+			}else if (pays == "Espagne"){
 				indicatif = "ES";
 			}
 			accountNumber = indicatif + str;	
@@ -52,21 +52,41 @@ public class Account extends BankEntity {
 
 
 
-public void setLastName(String lastName) {
-	this.lastName = lastName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+
+public void setAccountNumber(String accountNumber) {
+	this.accountNumber = accountNumber;
 }
 
 
 
-public String getFirstName() {
-	return firstName;
+public String getPays() {
+	return pays;
 }
 
 
 
-public void setFirstName(String firstName) {
-	this.firstName = firstName;
+public void setPays(String pays) {
+	this.pays = pays;
 }
+
+
 
 
 
@@ -76,14 +96,13 @@ public Double getSolde() {
 
 
 
+
+
 public void setSolde(Double solde) {
 	this.solde = solde;
 }
 
 
 
-public void setAccountNumber(String accountNumber) {
-	this.accountNumber = accountNumber;
-}
 
 }

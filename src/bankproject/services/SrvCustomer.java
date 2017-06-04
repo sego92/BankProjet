@@ -142,6 +142,41 @@ public class SrvCustomer extends BankService {
 			}
 		}
     }
+	
+	public BankEntity get(String fullName) throws Exception {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		BankEntity result = null;
+		
+		StringBuilder query = new StringBuilder("SELECT * FROM ");
+		query.append(getBankTable());
+		query.append(" WHERE lastName = ?, FirstName = ?");
+		
+		try {
+			connection = SQLiteManager.getConnection();
+			pst = connection.prepareStatement(query.toString());
+			pst.setString(1, fullName);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				result = readEntity(rs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
+			
+			if (pst != null) {
+				pst.close();
+			}
+		}
+		
+		return result;
+	}
 }
 
 
