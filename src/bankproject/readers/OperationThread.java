@@ -34,7 +34,7 @@ public class OperationThread extends Thread {
 		//super.run();
 		while(true){
 			try {
-				sleep(6600);				
+				sleep(660000);				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
