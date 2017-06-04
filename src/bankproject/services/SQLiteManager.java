@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLiteManager {
-private static SQLiteManager INSTANCE = new SQLiteManager();
+//private static SQLiteManager INSTANCE = new SQLiteManager();
 	
 	/**
      * Connect to a sample database
@@ -33,14 +33,14 @@ private static SQLiteManager INSTANCE = new SQLiteManager();
         }
     }
     
-    public static SQLiteManager getINSTANCE() {
-		return INSTANCE;
-	}
-
-
-	public static void setINSTANCE(SQLiteManager iNSTANCE) {
-		INSTANCE = iNSTANCE;
-	}
+//    public static SQLiteManager getINSTANCE() {
+//		return INSTANCE;
+//	}
+//
+//
+//	public static void setINSTANCE(SQLiteManager iNSTANCE) {
+//		INSTANCE = iNSTANCE;
+//	}
     
     public static Connection getConnection () throws SQLException {
     	String url = "jdbc:sqlite:" + getSQLiteDBPath();

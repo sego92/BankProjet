@@ -26,5 +26,9 @@ public class Customer extends BankEntity {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
+	public String getFullName(){
+		return lastName + "" + firstName;
+	}
 
 }
