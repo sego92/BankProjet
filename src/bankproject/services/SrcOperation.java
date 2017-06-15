@@ -1,6 +1,7 @@
 package bankproject.services;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,7 +93,7 @@ public class SrcOperation extends BankService {
     }
     
     
-    protected Operation populatedEntity (ResultSet rs) throws SQLException {
+    protected Operation readEntity (ResultSet rs) throws SQLException {
     	Operation operation = new Operation();
     	operation.setId(rs.getInt("id"));
     	operation.setAccountNumber(rs.getString("accountNumber"));
