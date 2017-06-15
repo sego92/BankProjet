@@ -3,8 +3,7 @@ package bankproject.entities;
 public class Account extends BankEntity {
 	private Integer id;
 	private String accountNumber;
-	private String lastName;
-	private String firstName;
+	private Customer customer;
 	private Double solde;
 	private String pays; 
 	
@@ -46,30 +45,6 @@ public class Account extends BankEntity {
 
 
 
-	public String getLastName() {
-		return lastName;
-	}
-
-
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-
-
 public void setAccountNumber(String accountNumber) {
 	this.accountNumber = accountNumber;
 }
@@ -100,6 +75,22 @@ public Double getSolde() {
 
 public void setSolde(Double solde) {
 	this.solde = solde;
+}
+
+
+
+
+
+public Customer getCustomer() {
+	return customer;
+}
+
+
+
+
+
+public void setCustomer(Customer customer) {
+	this.customer = customer;
 }
 
 
