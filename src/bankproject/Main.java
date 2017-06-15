@@ -1,18 +1,32 @@
 package bankproject;
 
-import java.sql.Connection;
-import java.sql.Statement;
 
+import java.sql.SQLException;
+
+import bankproject.readers.*;
 import bankproject.services.SQLiteManager;
+import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
+import bankproject.services.SrvOperation;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		
 		SrvCustomer srvCustomer = SrvCustomer.getINSTANCE();
-		Connection connection = SQLiteManager.getConnection ();
-		Statement st = connection.createStatement();
-		st.execute(srvCustomer.createTableCustomer());
+		SrvAccount srvAccount = SrvAccount.getINSTANCE();
+		SrvOperation srvOperation = SrvOperation.getINSTANCE();
+		SQLiteManager.getConnection();
+		srvCustomer.createTableCustomer();
+		srvAccount.createTableAccount();
+		srvOperation.createTableOperation();
+		
+		OperationThread xxx = new OperationThread ();
+		AccountCustomerThread yyy = new AccountCustomerThread ();
+		yyy.start();
+		xxx.start();
+		
+		
 
 	}
 

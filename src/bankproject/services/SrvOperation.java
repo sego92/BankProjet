@@ -7,20 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bankproject.entities.Account;
+
 import bankproject.entities.BankEntity;
 import bankproject.exceptions.SrvException;
 import bankproject.entities.Operation;
 
-public class SrcOperation extends BankService {
-	private static SrcOperation INSTANCE = new SrcOperation();
+public class SrvOperation extends BankService {
+	private static SrvOperation INSTANCE = new SrvOperation();
 	
-	public static SrcOperation getINSTANCE() {
+	public static SrvOperation getINSTANCE() {
 		return INSTANCE;
 	}
 
 
-	public static void setINSTANCE(SrcOperation iNSTANCE) {
+	public static void setINSTANCE(SrvOperation iNSTANCE) {
 		INSTANCE = iNSTANCE;
 	}
 	
@@ -30,7 +30,7 @@ public class SrcOperation extends BankService {
 		sql.append("CREATE TABLE IF NOT EXISTS operation (");
 		sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
 		sql.append("AccountNumber VARCHAR(255),");
-		sql.append("Operation DOUBLE,");
+		sql.append("CreditDebit DOUBLE,");
 		sql.append("DateOperation DATETIME");
 		sql.append(")");
 		
@@ -43,13 +43,14 @@ public class SrcOperation extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
+		java.sql.Date dateSQL = new java.sql.Date(entity.getDateOperation().getTime());
 		String sql = "INSERT INTO operation (accountNumber, creditDebit, dateOperation) VALUES (?, ?, ?)";
 		try {
 			connection = SQLiteManager.getConnection();
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, entity.getAccountNumber());
-			ps.setDouble(3, entity.getCreditDebit());
-			ps.setDate(4, entity.getDateOperation());
+			ps.setDouble(2, entity.getCreditDebit());
+			ps.setDate(3, dateSQL);
 			ps.execute();
 		}catch (SQLException e) {
 			
@@ -69,6 +70,7 @@ public class SrcOperation extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
+		java.sql.Date dateSQL = new java.sql.Date(entity.getDateOperation().getTime());
 		String sql = "UPDATE operation SET accountNumber=?, creditDebit=?, dateOperation=?, WHERE ID=?";
 		try {
 			connection = SQLiteManager.getConnection();
@@ -76,7 +78,7 @@ public class SrcOperation extends BankService {
 			//ps.setString(1, entity.createAccountNumber());
 			ps.setString(2, entity.getAccountNumber());
 			ps.setDouble(3, entity.getCreditDebit());
-			ps.setDate(4, entity.getDateOperation());
+			ps.setDate(4, dateSQL);
 			ps.setInt(5, entity.getId());
 			ps.execute();
 		}catch (SQLException e) {
@@ -98,7 +100,8 @@ public class SrcOperation extends BankService {
     	operation.setId(rs.getInt("id"));
     	operation.setAccountNumber(rs.getString("accountNumber"));
     	operation.setCreditDebit(rs.getDouble("creditDebit"));
-		operation.setDate(rs.getDouble("dateOperation"));
+    	java.util.Date dateUtil = new java.util.Date(rs.getDate("dateOperation").getTime());
+		operation.setDateOperation(dateUtil);
 	
 		return operation;
     }
@@ -114,7 +117,7 @@ public class SrcOperation extends BankService {
 				updateOperation(operation);
 			}
 		} else {
-			throw new SrvException("Utilisation du mauvais service");
+			throw new SrvException();
 		}
 	
 		

@@ -6,67 +6,87 @@ public class Account extends BankEntity {
 	private String lastName;
 	private String firstName;
 	private Double solde;
-	private PaysEnum pays; 
+	private String pays; 
 	
 	
 	
-public String getAccountNumber (){
-		int numeroAleatoire = (int) ((Math.random()*(999999-111111)+111111));
-		String str = String.valueOf(numeroAleatoire);
-		String indicatif = null;
-		if (pays == PaysEnum.FRANCE){
-			indicatif = "FR";
-		}else if (pays == PaysEnum.PAYS_BAS){
-			indicatif = "NL";
-		}else if (pays == PaysEnum.GRANDE_BRETAGNE){
-			indicatif = "GB";
-		}else if (pays == PaysEnum.ALLEMAGNE){
-			indicatif = "DE";
-		}else if (pays == PaysEnum.ESPAGNE){
-			indicatif = "ES";
-		}
-		accountNumber = indicatif + str;	
-		// si le n° de compte existe deja recommencer peut etre avec un while
-		return accountNumber;
+	public String getAccountNumber (){
+			int numeroAleatoire = (int) ((Math.random()*(999999-111111)+111111));
+			String str = String.valueOf(numeroAleatoire);
+			String indicatif = null;
+			if (pays=="France"){
+				indicatif = "FR";
+			}else if (pays == "Pays-Bas"){
+				indicatif = "NL";
+			}else if (pays == "Grande-Bretyagne"){
+				indicatif = "GB";
+			}else if (pays == "Allemagne"){
+				indicatif = "DE";
+			}else if (pays == "Espagne"){
+				indicatif = "ES";
+			}
+			accountNumber = indicatif + str;	
+			// si le n° de compte existe deja recommencer peut etre avec un while
+			return accountNumber;
 	}
 
 
 
 
 
-public Integer getId() {
-	return id;
+	public Integer getId() {
+		return id;
+	}
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+
+public void setAccountNumber(String accountNumber) {
+	this.accountNumber = accountNumber;
 }
 
 
 
-public void setId(Integer id) {
-	this.id = id;
+public String getPays() {
+	return pays;
 }
 
 
 
-public String getLastName() {
-	return lastName;
+public void setPays(String pays) {
+	this.pays = pays;
 }
 
 
-
-public void setLastName(String lastName) {
-	this.lastName = lastName;
-}
-
-
-
-public String getFirstName() {
-	return firstName;
-}
-
-
-
-public void setFirstName(String firstName) {
-	this.firstName = firstName;
-}
 
 
 
@@ -76,14 +96,13 @@ public Double getSolde() {
 
 
 
+
+
 public void setSolde(Double solde) {
 	this.solde = solde;
 }
 
 
 
-public void setAccountNumber(String accountNumber) {
-	this.accountNumber = accountNumber;
-}
 
 }
