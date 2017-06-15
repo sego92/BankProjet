@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 //import java.util.Scanner;
 
+import bankproject.entities.Account;
 import bankproject.entities.Operation;
 import bankproject.exceptions.SrvException;
 import bankproject.services.SrvOperation;
@@ -24,17 +25,26 @@ public class OperationThread extends Thread {
 		System.out.println(result[2]);
 		
 		op.setCreditDebit(Double.parseDouble(result[0]));
-		op.setAccountNumber(result[1]);
+		op.getAccount().getId();
 		
 		
 		return op;
+	}
+	
+	private Account splitDataAc (String line){
+		Account ac = new Account();
+		
+		String[] result = line.split("\t\t\t");
+		
+		ac.setAccountNumber(result[1]);
+		return ac;
 	}
 	
 	public void run (){
 		//super.run();
 		while(true){
 			try {
-				sleep(660000);				
+				sleep(660);				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -68,6 +78,7 @@ public class OperationThread extends Thread {
 					
 					while ((line=reader.readLine()) !=null){
 						System.out.println(line);
+						Account ac = splitData(line);
 						Operation op = splitData(line);
 						op.setDateOperation(dateOperation);
 					    try {
