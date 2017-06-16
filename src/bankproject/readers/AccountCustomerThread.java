@@ -39,9 +39,10 @@ public class AccountCustomerThread extends Thread{
 		System.out.println(result[2]);
 		
 		ac.setPays(result[0]);
-		ac.setLastName(result[1]);
-		ac.setFirstName(result[2]);
+		
 		ac.setSolde(Double.parseDouble(result[3]));
+		
+		ac.getCustomer().getId();
 		
 		
 		return ac;
@@ -52,7 +53,7 @@ public class AccountCustomerThread extends Thread{
 		//super.run();
 		while(true){
 			try {
-				sleep(420000);				
+				sleep(420);				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -94,7 +95,9 @@ public class AccountCustomerThread extends Thread{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					
 					Account ac = splitDataAc(line);
+					
 					String accountNumber = new String();
 					ac.setAccountNumber(accountNumber);
 					try {

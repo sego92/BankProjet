@@ -21,10 +21,10 @@ public class Main {
 		srvAccount.createTableAccount();
 		srvOperation.createTableOperation();
 		
-		OperationThread xxx = new OperationThread ();
+//		OperationThread xxx = new OperationThread ();
 		AccountCustomerThread yyy = new AccountCustomerThread ();
 		yyy.start();
-		xxx.start();
+//		xxx.start();
 		
 		
 

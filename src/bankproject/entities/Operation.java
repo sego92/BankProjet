@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Operation extends BankEntity {
 	private Integer id;
-	private String accountNumber;
+	private Account account;
 	private Double creditDebit;
 	private Date dateOperation;
 	public Integer getId() {
@@ -25,11 +25,12 @@ public class Operation extends BankEntity {
 	public void setDateOperation(Date dateOperation) {
 		this.dateOperation = dateOperation;
 	}
-	public String getAccountNumber() {
-		return accountNumber;
+	
+	public Account getAccount() {
+		return account;
 	}
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 }
