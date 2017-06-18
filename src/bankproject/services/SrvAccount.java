@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import bankproject.entities.Account;
 import bankproject.entities.BankEntity;
+import bankproject.entities.Customer;
 import bankproject.exceptions.SrvException;
 
 public class SrvAccount extends BankService {
@@ -28,9 +29,9 @@ public class SrvAccount extends BankService {
 		sql.append("CREATE TABLE IF NOT EXISTS account (");
 		sql.append("id INTEGER PRIMARY KEY AUTOINCREMENT,");
 		sql.append("AccountNumber VARCHAR(255),");
-		sql.append("LastName VARCHAR(255),");
-		sql.append("FirstName VARCHAR(255),");
-		sql.append("Solde DOUBLE");
+		sql.append("Solde DOUBLE,");
+		sql.append("customerID INTEGER,");
+		sql.append("FOREIGN KEY (customerID) REFERENCES customer (id) ON DELETE CASCADE");
 		sql.append(")");
 		
 		Statement st = SQLiteManager.getConnection().createStatement();
@@ -43,15 +44,20 @@ public class SrvAccount extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
-		String sql = "INSERT INTO account (accountNumber, lastName, firstName, solde) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO account (accountNumber, customerID, solde) VALUES (?, ?, ?)";
 		try {
 			connection = SQLiteManager.getConnection();
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, entity.getAccountNumber());
-			ps.setString(2, entity.getLastName());
-			ps.setString(3, entity.getFirstName());
-			ps.setDouble(4, entity.getSolde());
+			ps.setInt(2, entity.getCustomer().getId());
+			ps.setDouble(3, entity.getSolde());
 			ps.execute();
+			ResultSet rs=ps.getGeneratedKeys();
+			if (rs.next()) {
+				entity.setId(rs.getInt(1));
+			}  else {
+                System.out.println("Creating user failed, no ID obtained.");
+			}
 		}catch (SQLException e) {
 			
 		} finally {
@@ -70,15 +76,14 @@ public class SrvAccount extends BankService {
     	// TODO 
     	PreparedStatement ps = null;
 		Connection connection = null;
-		String sql = "UPDATE account SET accountNumber=?, lastName=?, firstName=?, solde=? WHERE ID=?";
+		String sql = "UPDATE account SET accountNumber=?, customerID=?, solde=? WHERE ID=?";
 		try {
 			connection = SQLiteManager.getConnection();
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, entity.getAccountNumber());
-			ps.setString(2, entity.getLastName());
-			ps.setString(3, entity.getFirstName());
-			ps.setDouble(4, entity.getSolde());
-			ps.setInt(5, entity.getId());
+			ps.setInt(2, entity.getCustomer().getId());
+			ps.setDouble(3, entity.getSolde());
+			ps.setInt(4, entity.getId());
 			ps.execute();
 		}catch (SQLException e) {
 			
@@ -94,11 +99,16 @@ public class SrvAccount extends BankService {
     }
     
     
-    protected Account readEntity (ResultSet rs) throws SQLException {
+    protected Account readEntity (ResultSet rs) throws Exception {
     	Account account = new Account();
+    	
+    	Integer customerID = rs.getInt("customerID");
+ 
+    	SrvCustomer srvCustomer = SrvCustomer.getINSTANCE();
+    	Customer customer = (Customer) srvCustomer.get(customerID);
+    	
 		account.setId(rs.getInt("id"));
-		account.setFirstName(rs.getString("firstname"));
-		account.setLastName(rs.getString("lastname"));
+		account.setCustomer(customer);
 		account.setAccountNumber(rs.getString("accountNumber"));
 		account.setSolde(rs.getDouble("solde"));
 	
@@ -154,11 +164,11 @@ public class SrvAccount extends BankService {
     }
 	
 	
-	public BankEntity get(String accountNumber) throws Exception {
+	public Account get(String accountNumber) throws Exception {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		BankEntity result = null;
+		Account result = null;
 		
 		StringBuilder query = new StringBuilder("SELECT * FROM ");
 		query.append(getBankTable());
@@ -177,13 +187,13 @@ public class SrvAccount extends BankService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			if (pst != null) {
+				pst.close();
+			}
 			if (connection != null) {
 				connection.close();
 			}
 			
-			if (pst != null) {
-				pst.close();
-			}
 		}
 		
 		return result;

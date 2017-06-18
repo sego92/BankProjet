@@ -45,13 +45,13 @@ public abstract class BankService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			if (pst != null) {
+				pst.close();
+			}
 			if (connection != null) {
 				connection.close();
 			}
 			
-			if (pst != null) {
-				pst.close();
-			}
 		}
 		
 		return result;

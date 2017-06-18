@@ -9,8 +9,10 @@ import java.sql.SQLException;
 import java.util.Date;
 //import java.util.Scanner;
 
+import bankproject.entities.Account;
 import bankproject.entities.Operation;
 import bankproject.exceptions.SrvException;
+import bankproject.services.SrvAccount;
 import bankproject.services.SrvOperation;
 
 public class OperationThread extends Thread {
@@ -24,17 +26,21 @@ public class OperationThread extends Thread {
 		System.out.println(result[2]);
 		
 		op.setCreditDebit(Double.parseDouble(result[0]));
-		op.setAccountNumber(result[1]);
+		Account ac = new Account ();
+		ac.setAccountNumber(result[1]);
+		op.setAccount(ac);
 		
 		
 		return op;
 	}
 	
+
+	
 	public void run (){
 		//super.run();
 		while(true){
 			try {
-				sleep(660000);				
+				sleep(660);				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,6 +76,16 @@ public class OperationThread extends Thread {
 						System.out.println(line);
 						Operation op = splitData(line);
 						op.setDateOperation(dateOperation);
+						try {
+							Account ac2 = SrvAccount.getINSTANCE().get(op.getAccount().getAccountNumber());
+							op.setAccount(ac2);
+							
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							System.out.println("compte inexistant:" + op.getAccount().getAccountNumber());
+							continue;
+						}
+						
 					    try {
 							SrvOperation.getINSTANCE().save(op);
 						} catch (SrvException e) {
