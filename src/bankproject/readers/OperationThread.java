@@ -12,6 +12,7 @@ import java.util.Date;
 import bankproject.entities.Account;
 import bankproject.entities.Operation;
 import bankproject.exceptions.SrvException;
+import bankproject.services.SrvAccount;
 import bankproject.services.SrvOperation;
 
 public class OperationThread extends Thread {
@@ -25,20 +26,15 @@ public class OperationThread extends Thread {
 		System.out.println(result[2]);
 		
 		op.setCreditDebit(Double.parseDouble(result[0]));
-		op.getAccount().getId();
+		Account ac = new Account ();
+		ac.setAccountNumber(result[1]);
+		op.setAccount(ac);
 		
 		
 		return op;
 	}
 	
-	private Account splitDataAc (String line){
-		Account ac = new Account();
-		
-		String[] result = line.split("\t\t\t");
-		
-		ac.setAccountNumber(result[1]);
-		return ac;
-	}
+
 	
 	public void run (){
 		//super.run();
@@ -78,9 +74,18 @@ public class OperationThread extends Thread {
 					
 					while ((line=reader.readLine()) !=null){
 						System.out.println(line);
-						Account ac = splitData(line);
 						Operation op = splitData(line);
 						op.setDateOperation(dateOperation);
+						try {
+							Account ac2 = SrvAccount.getINSTANCE().get(op.getAccount().getAccountNumber());
+							op.setAccount(ac2);
+							
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							System.out.println("compte inexistant:" + op.getAccount().getAccountNumber());
+							continue;
+						}
+						
 					    try {
 							SrvOperation.getINSTANCE().save(op);
 						} catch (SrvException e) {

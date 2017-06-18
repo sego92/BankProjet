@@ -48,6 +48,12 @@ public class SrvCustomer extends BankService {
 			ps.setString(1, entity.getLastName());
 			ps.setString(2, entity.getFirstName());
 			ps.execute();
+			ResultSet rs=ps.getGeneratedKeys();
+			if (rs.next()) {
+				entity.setId(rs.getInt(1));
+			}  else {
+                System.out.println("Creating user failed, no ID obtained.");
+			}
 		}catch (SQLException e) {
 			
 		} finally {
@@ -143,20 +149,22 @@ public class SrvCustomer extends BankService {
 		}
     }
 	
-	public BankEntity get(String fullName) throws Exception {
+	public Customer get(String lastName, String firstName) throws Exception {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		BankEntity result = null;
+		Customer result = null;
 		
 		StringBuilder query = new StringBuilder("SELECT * FROM ");
 		query.append(getBankTable());
-		query.append(" WHERE lastName = ?, FirstName = ?");
+		query.append(" WHERE lastName=? AND firstName=?");
 		
 		try {
 			connection = SQLiteManager.getConnection();
-			pst = connection.prepareStatement(query.toString());
-			pst.setString(1, fullName);
+			String s = query.toString();
+			pst = connection.prepareStatement(s);
+			pst.setString(1, lastName);
+			pst.setString(2, firstName);
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
@@ -164,15 +172,15 @@ public class SrvCustomer extends BankService {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
+			if (pst != null) {
+				pst.close();
+			}
 			if (connection != null) {
 				connection.close();
 			}
 			
-			if (pst != null) {
-				pst.close();
-			}
 		}
 		
 		return result;

@@ -42,7 +42,7 @@ public class AccountCustomerThread extends Thread{
 		
 		ac.setSolde(Double.parseDouble(result[3]));
 		
-		ac.getCustomer().getId();
+
 		
 		
 		return ac;
@@ -87,6 +87,15 @@ public class AccountCustomerThread extends Thread{
 					System.out.println(line);
 					Customer cu = splitDataCu(line);
 					try {
+						Customer cu2 = SrvCustomer.getINSTANCE().get(cu.getLastName(),cu.getFirstName());
+						if (cu2!=null){
+							cu.setId(cu2.getId());
+						}
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+//						e2.printStackTrace();
+					}
+					try {
 						SrvCustomer.getINSTANCE().save(cu);
 					} catch (SrvException e1) {
 						// TODO Auto-generated catch block
@@ -98,8 +107,8 @@ public class AccountCustomerThread extends Thread{
 					
 					Account ac = splitDataAc(line);
 					
-					String accountNumber = new String();
-					ac.setAccountNumber(accountNumber);
+					ac.generateAccountNumber();
+					ac.setCustomer(cu);
 					try {
 						SrvAccount.getINSTANCE().save(ac);
 					} catch (SrvException e) {
@@ -109,6 +118,7 @@ public class AccountCustomerThread extends Thread{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
 				
 				}
 			} catch (IOException e) {
